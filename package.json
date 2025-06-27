@@ -1,10 +1,14 @@
 {
 	"scripts": {
-		"test": "npx tsx test.ts"
+		"test": "npx tsx test.ts",
+		"build": "tsc"
 	},
 	"dependencies": {
 		"@types/node": "^24.0.4",
-		"dotenv": "^16.6.0",
+		"node-tls-client": "^2.1.0",
 		"typescript": "^5.8.3"
+	},
+	"devDependencies": {
+		"dotenv": "^16.6.0"
 	}
 }

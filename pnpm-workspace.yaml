@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - ffi-napi
+  - koffi
+  - koffi-curl
+  - ref-napi
