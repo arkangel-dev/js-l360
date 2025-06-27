@@ -1,4 +1,9 @@
 {
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
 	"name": "js-l360",
 	"description": "This is a Life360 client implemented in Nodejs. Uses node-tls-client under the hood to avoid TLS fingerprinting.",
 	"version": "1.0.0",
