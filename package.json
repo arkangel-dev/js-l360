@@ -1,0 +1,10 @@
+{
+	"scripts": {
+		"test": "npx tsx test.ts"
+	},
+	"dependencies": {
+		"@types/node": "^24.0.4",
+		"dotenv": "^16.6.0",
+		"typescript": "^5.8.3"
+	}
+}
