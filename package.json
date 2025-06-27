@@ -1,4 +1,7 @@
 {
+	"name": "js-l360",
+	"description": "This is a Life360 client implemented in Nodejs. Uses node-tls-client under the hood to avoid TLS fingerprinting.",
+	"version": "1.0.0",
 	"scripts": {
 		"test": "npx tsx test.ts",
 		"build": "tsc"
