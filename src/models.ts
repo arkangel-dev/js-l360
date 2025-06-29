@@ -134,3 +134,36 @@ export interface PollableRequest {
   requestId: string;
   isPollable: string;
 }
+
+export interface DeviceLocationResponse {
+  data: {
+    items: DeviceLocationItem[];
+  };
+}
+
+export interface DeviceLocationItem {
+  deviceId: string;
+  latitude: number;
+  longitude: number;
+  accuracy: number;
+  firstObserved: string; // ISO date string
+  lastObserved: string;  // ISO date string
+  batteryLevel: number;
+  batteryCharging: boolean;
+  wifiConnected: boolean;
+  speed: number;
+  inTransit: boolean;
+  userActivity: string;
+  updated: string; // ISO date string
+  state: {
+    wifi: {
+      time: string; // ISO date string
+      connected: boolean;
+    };
+  };
+  owners: {
+    userId: string;
+  }[];
+  provider: string;
+  type: string
+}

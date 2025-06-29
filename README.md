@@ -3,8 +3,12 @@
 
 This is a Life360 client implemented in Nodejs. Uses [node-tls-client](https://github.com/Sahil1337/node-tls-client) under the hood to avoid TLS fingerprinting.
 
+```sh
+pnpm install @arkangel-dev/js-l360
+```
+
 ```js
-import JsL360 from 'ls-l360'
+import JsL360 from 'js-l360'
 
 const client = new JsL360({
     username: "your-awesome-username-here",

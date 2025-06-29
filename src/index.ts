@@ -1,8 +1,8 @@
-import { ENDPOINT, INITIAL_TOKEN, USER_AGENT } from "./conts";
+import { ENDPOINT, INITIAL_TOKEN, USER_AGENT } from "./consts";
 import { Session, ClientIdentifier, initTLS } from "node-tls-client";
-import { AuthenticationResponseDtoModel, Circle, GetCirclesResponse, GetMembersListResponseModel, GetPlacesResponseModel, Member, Place } from "./models";
+import type { AuthenticationResponseDtoModel, Circle, DeviceLocationResponse, GetCirclesResponse, GetMembersListResponseModel, GetPlacesResponseModel, Member, Place } from "./models";
 
-interface JsL360Props {
+export interface JsL360Props {
     username: string;
     password: string;
     token?: string;
@@ -59,6 +59,9 @@ class JsL360 {
      */
     async AuthenticateAsync() {
         await this.init_tls()
+        if (this.props.token)
+            return this.props.token;
+
         const result = await this.tls_session.post(`${ENDPOINT}/v3/oauth2/token`, {
             body: new URLSearchParams({
                 username: this.props.username,
@@ -72,6 +75,7 @@ class JsL360 {
         })
         const response_body = await result.json() as AuthenticationResponseDtoModel;
         this.props.token = `Bearer ${response_body.access_token}`;
+        return this.props.token;
     }
 
     /**
@@ -181,6 +185,29 @@ class JsL360 {
             }
         });
         return result.ok
+    }
+
+    /**
+     * Fetches the latest location update for the device.
+     * Returns the most recent location data for the device, or null if no update is available.
+     * @returns {Promise<DeviceLocationResponse | null>} - A promise that resolves to the device location response or null if no update is available.
+     */
+    async GetLocationUpdateAsync(circleid:string): Promise<DeviceLocationResponse | null> {
+        const result = await this.tls_session.get(`${ENDPOINT}/v5/circles/devices/locations`, {
+            headers: {
+                ...this.__getHeaders(),
+                "circleid": circleid,
+                "ce-id": "054443b3-0cc7-4c3e-9201-76ba4f0cb1d7",
+                "ce-type": "com.life360.cloud.platform.devices.locations.v1",
+                "ce-source": "/ANDROID/13/Google-Pixel-5/androidGraph-4e",
+                "ce-specversion": "1.0",
+                "ce-time": new Date().toISOString(),
+            }
+        });
+
+        if (result.status === 304) return null
+        if (!result.ok) throw new Error(`Failed to fetch location update: ${result.status}`);
+        return await result.json() as DeviceLocationResponse;
     }
 }
 
